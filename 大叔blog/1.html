@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>大叔blog学习</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//全局变量是在任何函数外面声明或是未声明直接使用的，每一个javascript环境都有一个全局对象（在任意的函数外使用this就可以访问到），你所声明的全局变量都是这个全局对象的属性，
+		//在浏览器中为了方便起见，这个全局对象有一个附加属性window，它通常指向该全局对象本身
+
+		//这里的一个点是全局变量的删除问题
+
+		/*var a = 'hao';
+		b = 'haha';
+		console.log(delete a); //false
+		console.log(delete b); //true*/   //隐式全局变量相当于全局对象的属性，全局对象的属性是可以删除的 通过var定义的全局变量是不能删除的
+
+		/*var a=b=0; //a是局部变量 b是全局变量  相当于  var a = (b = 0);*/
+
+        //在任何层级获得全局对象的方法
+       /* var global = (function(){
+        	return this;
+        }());*/
+        
+
+        //变量的声明问题
+       /* var a = 10，
+        	b = 20,
+        	c = 30;*/
+
+      //声明的解析问题，这个在面试中遇到过
+      /*
+      b = 20;
+      function a() {
+      	console.log(b); //undefined
+      	var b = 10;
+      	console.log(b); //10
+      }
+      a();*/
+
+      //上面的代码相当于
+
+      /*
+      b = 20;
+      function a() {
+      	var b;
+      	console.log(b);
+      	b = 10;
+      	console.log(b);
+      }
+      a();*/
+
+      //针对for循环的优化   缓存数组的长度 HTMLCollections的概念 当读取HTMLCollections的长度的时候，它是实时的查询DOM 这样花费的成本很高，所以缓存HTMLCollections的长度
+
+      //循环的时候使用i--     i = i + 1
+
+      /*var i = 0;
+      	  myarray = [],
+      	  length = myarray.length;
+
+      for(i = length;i--) {
+      	myarray[i]
+      }*/   //一个循环优化的案例
+
+
+      //for in 循环非数组对象  数组还是正常的for循环
+
+
+      /*var a = {
+      	name:'hao',
+      	id:100
+      }
+
+      for(var key in a) {
+      	if(a.hasOwnProperty(key))  {
+      		console.info(key);
+      	}
+      }*/
+
+      /*var a = {
+      	name:'hao',
+      	id:100
+      }
+
+      if(typeof Object.prototype.test === "undefined") {
+      	Object.prototype.test = function(){};
+      }
+
+      for (var i in a) {
+   		if (Object.prototype.hasOwnProperty.call(a, i)) { 
+      		console.log(i,':',a[i]);
+   		}
+	  }*/
+      
+
+      //使用 === !==
+
+
+      //给setInterval() setTimeout() Function() 构造函数传递参数的时候要注意 相当于使用eval
+
+
+      /*function a() {
+      	console.log(a);
+      }
+
+      setTimeout('a',100);
+
+      setTimeout(function(){
+      	a(10);
+      },100);
+*/
+
+
+     /* eval  new Function()()的考点*/
+     /*new Function()  是在局部的作用域中运行的 使用 var声明的变量不会自动的变成全局变量
+     eval() 使用var声明的会变成全局变量  阻止  (function(){
+     	eval();
+     }())*/
+	 //立即执行eval会防止自动全局变量
+
+	/* eval() Function()的第二个考点是 作用链域的问题*/
+
+	/*(function(){
+		var local = 1;
+		eval("local = 2,console.log(local)");
+		console.log(local);
+	}());
+
+	(function(){
+		var local = 1;
+		new Function("console.log(local)")();
+	}());
+*/
+	//new Function只能看到全局的作用域 而eval能影响本地的作用域
+
+     /*关于{}*/
+
+    /* return {
+     	name: 'hao'
+     }
+
+     return 
+     {
+     	name :'hao'
+     }
+*/
+     /*上面的两个例子 一个会返回一个对象   第二个相当于
+     return undefined;
+     {
+     	name: 'hao'
+     }
+*/
+	</script>
+</body>
+</html>
