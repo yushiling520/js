@@ -123,13 +123,13 @@
 
 	/*(function(){
 		var local = 1;
-		eval("local = 2,console.log(local)");
-		console.log(local);
+		eval("local = 2,console.log(local)"); //2
+		console.log(local);//2
 	}());
 
 	(function(){
 		var local = 1;
-		new Function("console.log(local)")();
+		new Function("console.log(local)")(); //undefined
 	}());
 */
 	//new Function只能看到全局的作用域 而eval能影响本地的作用域
