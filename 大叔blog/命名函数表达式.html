@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>命名函数表达式</title>
+</head>
+<body>
+	<script type="text/javascript">
+	//ECMAScript中，创建函数的最常用的两种方法:函数声明 函数表达式 两者最大的区别是函数声明必须有函数名 函数表达式可以省略这个标示符
+	//函数声明   
+	//function 函数名称(参数:可选){函数体}
+	//函数表达式
+	//function 函数名称(可选)(参数:可选){函数体}
+
+	//同时要根据函数的上下文环境来判断函数表达式    类似这样的一段 function a(){} 如果位于程序的顶部或者被包含在一个函数体的内部 ，它就是一个函数声明。当他作为一个赋值表达式的一部分的时候，它就是一个函数表达式
+
+
+
+	//关于()这个分组运算符  它里面一定是函数表达式 下面的例子会报错 这里的var是语句不是函数表达式
+		/*try {
+			(var x = 7);
+		} catch(err) {
+			console.log(err);
+		}*/
+
+
+		/*try {
+			var x = 7;
+		} catch(err) {
+			console.log(err);
+		}*/
+
+
+	//处理json的问题
+	/*	try {
+			{ "x" : 6};  
+		} catch(err) {
+			console.info(err);
+		}*/
+	//上面的{}会被解析成代码块
+		/*try {
+			({"x" : 6});
+		} catch(err) {
+			console.info(err);
+		}*/
+	//分组操作符()会把{}当做对象字面量来解析
+
+	/*函数声明和函数表达的另一个区别 是否会获得提升*/
+	//函数声明会在任何表达式被解析和求值之前被解析和求值
+
+	/*函数声明最好不要在条件语句中用,最好使用函数表达式*/
+
+	/*var foo;
+	var flag = false;
+	if(flag) {
+		foo = function(){
+			console.log(1);
+		};
+	} else {
+		foo = function(){
+			console.log(2);
+		}
+	}
+
+	foo();*/
+
+
+	//命名的函数表达式的名字只有在新定义的函数作用域内有效
+
+	/*var foo = function a() {
+		console.log(typeof a);
+	};
+	foo();
+
+	console.log(a);*/  //undefined
+
+
+	/*function foo(){
+		return bar();
+	}
+	function bar(){
+		return baz();
+	}
+	function baz(){
+		debugger;
+	}
+	foo();*/
+	//学会查看堆栈的调用顺序
+	//
+
+	/*function foo(){
+		return bar();
+	}
+	var bar = function a(){
+		return baz();
+	}
+	function baz(){
+		debugger;
+	}
+	foo();*/
+
+	//堆栈的调用顺序 baz a foo 
+
+	/*function foo(){
+		return bar();
+	}
+	var bar = function(){
+		return baz();
+	}
+	function baz(){
+		debugger;
+	}
+	foo();*/
+
+
+	//baz bar foo 之所以这样是浏览器自动为我们的匿名函数表达式取名字了 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
