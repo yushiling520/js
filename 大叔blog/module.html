@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>module模式</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//模块化的基本特征 
+		//1.模块化，可重用 2.封装了变量和function 不与全局的namespace接触 松耦合 3.只暴露可用的public 其他的私有方法隐藏
+
+		//匿名闭包
+		/*(function(){
+			//所用的变量和function都在这里声明，作用域也只能存在这个闭包中，这里的代码仍然能访问外部的作用域，是作用链的问题
+
+		}());*/
+
+		//一个基本的module
+
+		/*var module = (function(){
+			var my = {},
+				id = 123;
+
+			function getId() {
+				return id;
+			}
+
+			my.Id = id;
+			my.getPrivateId = function() {
+				return getId();
+			}
+
+			return my;
+		}());
+
+		console.log(module.Id);
+		console.log(module.getPrivateId());
+*/
+
+		//扩展上面的module 这样的扩展模式必须是module已经存在  这里的var不是必须的
+		/*var module = (function(my){
+			my.say = function() {
+				return "扩展了";
+			}
+
+			return my;
+		}(module));
+
+		console.log(module.say());*/
+
+
+		//松耦合扩展 ，此时的var是必须的 通过这样定义的文件可以实现任意的加载顺序
+		/*var module = (function(my){
+			//一些操作
+
+			return my;
+		}(module || {}));*/
+
+		//紧耦合扩展 此时的var不是必须的，虽然限制了加载的顺序，但是为我们提供了重载的可能
+
+
+		/*var module = (function(){
+			var my = {},
+				id = 123;
+			function a() {
+				return "a";
+			};
+
+
+			my.b = function(){
+				return "this is old func";
+			}
+			return my;
+		}());
+		console.log(module.b());
+		var module = (function(my){
+			var oldfunc = my.b;
+
+			my.b = function() {
+				return "this is new func";
+			}
+			my.oldfunc = oldfunc;
+			return my;
+		}(module));
+
+		console.log(module.b());
+		console.log(module.oldfunc());
+
+
+		module.test = (function(){
+			var name = "aa",
+				my = {};
+
+
+			my.sayName = function(){
+				console.log(module.b());
+				return name;
+			}
+
+			return my;
+		}());
+
+		console.log(module.test.sayName());
+		console.log(module.b());
+*/
+
+		//创建命名空间的通用函数
+		var MySpace = MySpace || {};
+        MySpace.namespace = function(ns_string){
+        	var parts = ns_string.split('.'),
+        		parent = MySpace,
+        		i = 0,
+        		length = 0;
+
+        	if(parts[0] === "MySpace") {
+        		parts = parts.slice(1);
+        	}
+
+        	for(i = 0;length = parts.length,i < length;i += 1) {
+        		if(typeof parent[parts[i]] === "undefined") {
+        			parent[parts[i]] = {};
+        		}
+
+        		parent = parent[parts[i]];
+        	}
+
+        	return parent;
+
+        }
+
+
+        MySpace.namespace('MySpace.modules.test');
+
+
+        MySpace.modules.test = (function(){
+        	var name = "haha",
+        		my = {};
+
+        	my.sayName = function(){
+        		return  name;
+        	}
+
+        	return my;
+        }());
+
+
+        
+      	console.log(MySpace.modules.test.sayName());
+
+      	MySpace.namespace('MySpace.modules.test.a');
+
+      	MySpace.modules.test.a = (function(){
+      		var my = {};
+
+      		my.test = function(){
+      			return MySpace.modules.test.sayName();
+      		}
+
+      		return my;
+      	}());
+
+      	console.log(MySpace.modules.test.a.test());
+
+
+		
+
+		　
+
+　　　　　
+
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
