@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>json</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//json是一种数据交换的语言，它有自己的语法，是javascript的一个子集
+
+		//理解字面量  固定的值，不是变量 让你从"字面上"理解脚本
+
+		var foo = '{"id":"1"}';//在string上下文中使用(用单引号或者双引号引住或者从text文件读取)，那它就是json字符串 遵循严格的语法
+
+		var foo1 = {"id":"2"};//在对象字面量上下文中使用，就是对象字面量
+
+		//json对象
+
+		//JSON.parse()用于将JSON字符串反序列化成字符串    JSON.stringify()用于将对象序列化成JSON字符串
+
+		var string = '{"id":"1"}';
+
+		var json_obj = JSON.parse(string);
+
+		console.log(json_obj);
+		console.log(typeof json_obj);
+		console.log(json_obj.id);
+
+		var string2 = JSON.stringify(json_obj);
+		console.log(string2);
+	</script>
+</body>
+</html>
