@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>prototype 学习</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/*var Calculator = function(num1,num2) {
+			this.x = num1;
+			this.y = num2;
+
+		};
+		
+		Calculator.prototype.add = function(){
+			return this.x + this.y;
+		};
+		
+		console.log((new Calculator(1,2)).add());*/
+
+		//在Calculator的原型对象中加入一个方法 然后通过Calculator调用这个方法 处理自己的数据
+
+		//实现一个基本的原型继承
+		/*var animal = function(){
+			this.type = "animal";
+			this.testtype = "haha";
+
+		}
+
+		animal.prototype.sayType = function(){
+			console.log(this.type);
+		};
+
+		var person = function() {
+			this.type = "person";
+
+		}*/
+
+		/*person.prototype = new animal();
+
+		var a = new person();
+		a.sayType();
+		console.log(a.testtype);*/
+		//person的原型指向animal的一个实例(不管你创建多少个person对象的实例，他们的原型均指向同一个实例) 我们也能在person中访问animal的属性 这是因为原型链的查找问题
+
+		//如果指向使用animal的原型的函数  完全可以通过下面的方式  
+		/*person.prototype = animal.prototype;
+		var a = new person();
+		a.sayType();
+		console.log(typeof a.testtype);//undefined*/
+
+		//下面的例子重写了原型中的方法
+		/*person.prototype = new animal();
+
+		person.prototype.sayType = function() {
+			console.log("我是人呀");
+		}
+
+		var a = new person();
+		a.sayType();*/
+
+
+		/*function person(){
+
+		}
+
+		function mammal() {
+			this.type = "mammal";//共享属性
+		}
+
+		mammal.prototype = {
+			type : "animal"
+		};
+
+
+		person.prototype = new mammal();
+
+		var a = new person();
+
+		console.log(a.type);
+
+		a[person的实例]
+			person的原型[mammal的实例]
+				[type:"mammal"] [mammal的实例的属性]
+					mammal.prototype
+						[type:"animall"][mammal原型的属性]
+							object.prototype*/
+
+
+
+		//遍历一个对象的属性的时候使用 hasOwnProperty();
+
+		/*function Person() {
+			this.name = "haha";
+
+			this.sayName = function(){
+				console.log(this.name);
+			}
+		}
+
+		var p1 = new Person();
+		var p2 = new Person();
+		p1.sayName();
+		console.log(p1.sayName === p2.sayName); //false*/
+
+		/*function Person() {
+			this.name = "haha";
+
+			this.sayName = sayName;
+		}
+
+		function sayName() {
+			console.log(this.name);
+		}
+
+		var p1 = new Person();
+		var p2 = new Person();
+
+		p1.sayName()
+		console.log(p1.sayName === p2.sayName);//true*/
+
+
+		/*function SuperType(name) {
+			this.name = name;
+			this.colors = ["red","green"];
+		}
+
+
+		function SubType(name) {
+			SuperType.call(this,name);
+			//可以在这里添加自己的属性
+			//call apply的区别是apply传递参数的形式必须是一个数组 call以多个参数的形式传递
+		}
+
+		SuperType.prototype.sayHi = function() {
+			console.log("hi");
+		}
+
+		
+
+
+		var a = new SubType("haha");
+		var b = new SubType("hao");
+
+		a.sayHi();
+
+		console.log(a.name);//haha
+		console.log(b.name);//hao
+
+		a.colors.push("black");
+		console.log(a.colors);//["red","green","black"]
+		console.log(b.colors);//["red","green"]*/
+
+
+		function SuperType(name) {
+			this.name = name;
+			this.colors = ["red","green"];
+		}
+
+		SuperType.prototype.sayName = function() {
+			console.log(this.name);
+		}
+
+		function SubType(name) {
+			SuperType.call(this,name);
+
+		}
+
+		SubType.prototype = new SuperType();
+
+		var a = new SubType("haha");
+		var b = new SuperType("hao");
+
+		a.sayName();//haha
+		b.sayName();//hao
+
+		a.colors.push("black");
+		console.log(a.colors);//["red","green","black"]
+		console.log(b.colors);//["red","green",]
+
+
+
+		
+
+	</script>
+</body>
+</html>
