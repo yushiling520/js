@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>执行上下文</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//当进入函数代码的时候，ECStack被压入新的元素 当return的时候，相应的ECstack就会弹出，栈指针会自动移动位置
+
+		//eval 调用上下文 eval(变量或函数声明)活动会影响调用上下文
+
+		/*eval('var x = 10');
+
+		(function foo(){
+
+			eval('var y = 30'); 
+		}());
+
+		console.log(x); //10
+		console.log(y); //undefined*/
+
+		/*Ecstack = [
+			globalContext;
+		];		
+
+		//eval('var x = 10')
+
+		Ecstack.push(
+			evalContext,
+			callingContext:globalContext
+		);
+
+		//eval exited context
+
+		Ecstack.pop();
+
+		//foo function call
+		Ecstack.push(<foo> functionContext);
+
+		//eval("var y = 30")
+
+		Ecstack.push(
+			evalContext,
+			callingContext:<foo> functionContext
+		);
+
+		//return from eval
+
+		Ecstack.pop();
+
+		//return from foo
+		Ecstack.pop();
+
+		Ecstack = [
+			globalContext;
+		];
+*/
+		//模拟了eval调用的流程
+
+
+		
+
+	</script>
+</body>
+</html>
