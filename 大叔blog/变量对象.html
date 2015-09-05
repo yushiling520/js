@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>variable object</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//如果变量与执行上下文相关，那变量自己应该知道它的数据存储在哪里并且知道如何访问，这种机制称为变量对象
+
+		//变量对象(VO)是一个与执行上下文相关的特殊对象，它储存着在上下文声明的一下内容
+		//1）变量 2）函数声明 3）函数的形参
+
+		//当我们声明一个变量或者一个函数的时候，和我们创建VO的新属性一样没有区别
+
+		/*var a = 10;
+
+		function test(x) {
+			var b = 20;
+		}
+		test(30);
+		*/
+
+		//全局上下文的变量对象
+
+		/*VO(globalContext) = {
+			a:10,
+			test:<reference to function>
+		};
+
+		VO(test functionContext) {
+			x:30,
+			b:20
+		}*/
+
+
+		//全局上下文的变量对象
+		//全局对象是在进入任何执行上下文之前就已经创建了的对象，这个对象就只存在一份，全局对象的生命周期终止与程序退出的那一刻
+
+		/*var global = (function(){
+			console.log(this === window);
+			return this;
+
+		}()); //任何层级获得全局对象的方法
+		*/
+
+		//在全局上下文中，变量对象就是全局对象本身
+
+		//函数执行上下文 由活动对象AO(activation object)扮演变量对象(VO)的角色
+		//活动对象是在进入函数的上下文时刻被创建的，它通过函数的arguments属性初始化。arguments属性的值是Arguments对象
+
+		/*AO = {
+			arguments:<Argo>
+		};*/
+
+		//Arguments对象是活动对象的一个属性 
+		//1)callee:指向当前函数的引用 2）length:真正传递的参数的个数 3）properties-indexes 属性的值就是函数参数的值（参数列表从左到右排列） properties-indexes内部元素的个数等于arguments.length    properties-indexes的值和实际传递进来的参数之前是共享的
+
+		/*function foo(x,y,z) {
+			console.log(foo.length);//声明的函数参数的数量 arguments(x,y,z)  3
+			console.log(arguments.length);//实际传进来参数的数量 2
+			console.log(arguments.callee === foo); //
+
+
+			//参数共享
+
+			console.log(x);
+			console.log(x === arguments[0]);
+
+			arguments[0] = 20;
+			console.log(x);
+
+
+			z = 40;
+			//因为没有传进来第三个参数 所以第三个参数并没有共享
+			arguments[2] = 50;
+
+			console.log(z);
+		}
+
+
+		foo(10,20);
+*/
+		
+
+		//执行上下文代码分为两个阶段 1）进入执行上下文 2）执行代码
+		//进入执行上下文(代码执行之前)  VO就已经包含了下列的属性 1）函数的所有形参(在函数的执行上下文中)  2）所有函数的声明 (提升的问题) 3)所有的变量的声明 如果变量的声明跟已经存在的形参或者函数相同，则函数声明不会干扰已经存在的这类属性
+
+		/*function test(a,b) {
+			var c = 10;
+			function d() {}
+
+			var e = function _e() {};
+
+			(function x(){});//活动对象中不包含这个函数表达式 函数表达式不会影响变量对象
+		}
+
+		test(10);*/
+
+		//在进入test的上下文是
+
+		/*AO(test) = {
+			a:10,
+			b:undefined,
+			c:undefined,
+			e:undefined,
+			d:<reference functionDeclaration "d">,
+
+		}*/
+
+
+		//代码执行阶段
+
+		/*AO(test) = {
+			a:10,
+			b:undefined,
+			c:10,
+			d:<reference functionDeclaration "d">,
+			e:<reference functionExpression "_e">
+		}*/
+
+		/*console.log(x); //function  变量声明在顺序上是跟在函数声明和形式参数声明之后的，而且在进入这个上下文阶段，变量声明不会干扰VO中已经存在的同名的函数声明或形式参数声明
+		在执行代码阶段 VO的x修改，所以产生了下面的效果
+
+		var x = 10;
+		console.log(x); //10
+
+		x = 20;
+
+		function x() {};
+
+		console.log(x); //20*/
+
+
+
+		/*console.log(x);  //undefined
+		var x = 10;*/
+
+		/*if(true) {
+			var a = 10;
+		} else {
+			var b = 20;
+		}
+		console.log(a);//10
+		console.log(b);//undefined*/  //这个也是理解VO的一个例子 javascript没有块级作用域，所以进入上下文的时候 VO中对a b都进行了添加 只不过后来在执行阶段 VO的a值进行了修改 而b的值没有修改(undefined 不是不存在)
+
+		//变量 任何时候只有通过var关键字声明的才是变量
+
+		/*console.log(a); //undefined(有声明但是没有值)
+		console.log(b);//没有声明
+
+		b = 10; //相当于给全局变量添加属性
+		var a = 20;*/
+
+		//进入上下文阶段
+
+		/*VO = {
+			a:undefined
+		}*/
+
+
+		//变量不能通过delete操作符进行删除 但是在eval中变量是可以删除的
+
+		/*eval('var x = 10');
+		console.log(delete x); //true
+*/
+
+
+
+	</script>
+</body>
+</html>
