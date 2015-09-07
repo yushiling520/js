@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>this</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//this与上下文中可执行的代码的类型有直接的关系，this值在进入上下文时确定，并且在上下文运行期间永不改变(不能改变this的值)
+		//在函数代码中this不是静态的绑定到一个函数  
+		/*var foo = {x: 10};
+ 
+		var bar = {
+			x: 20,
+			test: function () {
+
+			console.log(this === bar); 
+			console.log(this.x); 
+			//this = foo; // 错误，任何时候不能改变this的值
+			}
+ 
+		};
+		bar.test();//以这样的方式调用的时候 this被当成bar对象 true 20 20
+
+		foo.test = bar.test;
+
+		foo.test();//false 10*/
+
+		//通常情况下 this由激活上下文的代码的调用者来提供(调用函数的父上下文) this取决于调用函数的方式
+
+	/*	var foo = {
+			bar:function(){
+				console.log(this);
+				console.log(this == foo);
+			}
+		}
+
+		foo.bar();// foo true
+		var a = foo.bar;
+		a();//window false
+*/
+		
+		//引用类型
+		/*var valueOfReferenceType = {
+			base:<base object>,//拥有属性的那个值
+			property:<property name>
+		};*/
+
+		/*var foo = 10;
+
+		var fooReference = {
+			base:global,
+			property:'foo'
+		}*/
+
+
+		//在一个函数的上下文中 this由调用者提供，由调用的函数方式来决定，如果调用括号的左边是引用类型的值，this将设定为引用类型的值的base对象，其他情况下(与引用类型不同的其他属性)，this值为null(当this值默认为null是会自动的隐式的转换为全局对象) 在ECMAScript5中已经不隐式转换，而是赋值为undefined
+
+		/*(function(){
+			console.log(this); //window  这个函数对象不是引用类型的对象 所以this的值最终设为全局对象
+		}())*/
+
+		/*var foo = {
+			bar: function () {
+			alert(this);
+			}
+		};
+
+		foo.bar(); // Reference, OK => foo
+		(foo.bar)(); // Reference, OK => foo
+
+		(foo.bar = foo.bar)(); // global?
+		(false || foo.bar)(); // global?
+		(foo.bar, foo.bar)(); 
+*/
+
+		/*function foo() {
+			function bar() {
+				console.log(this);
+			}
+			bar();
+		}
+		foo();*/
+
+		//内部函数被函数调用的时候 (局部变量，内部函数，形式参数储存在给定函数的激活对象中) 活动对象总是作为this返回 值为null 然后将this设置为全局的对象。
+
+		/*var x = 10;
+ 
+		with ({
+			foo: function () {
+			console.log(this.x);
+			},
+			x: 20
+
+		}) {
+
+		foo(); // 20
+
+		}*/
+		/*var  fooReference = {
+		base: __withObject,
+		propertyName: 'foo'
+		};*/
+
+		//如果with对象包含一个函数名属性，在with语句块内调用函数，with语句将添加该对象到作用链域的最前端(with对象比全局对象或者是活动对象都要靠前)
+
+		//在函数调用中手动设置this的值  apply call  apply 第二个参数必须是数组 call可以是任何参数
+
+		var b = 10;
+
+		function a(c) {
+			alert(this.b);
+			alert(c);
+		}
+ 
+		a(20); // this === global, this.b == 10, c == 20
+		 
+		a.call({b: 20}, 30); // this === {b: 20}, this.b == 20, c == 30
+		a.apply({b: 30}, [40]) // this === {b: 30}, this.b == 30, c == 40
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
