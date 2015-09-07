@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>作用链域</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/*var x = 10;
+ 
+		function foo() { 
+ 		 	var y = 20; 
+  			function bar() {
+    			console.log(x + y);
+ 			} 
+  			return bar; 
+		}
+ 
+		foo()(); // 30*/
+
+		//作用链域正是内部上下文所有变量对象(包括父级变量对象)的列表 bar的作用链域包含 bar的AO foo的AO  VO(global)
+
+		//作用链域与执行上下文相关，变量对象用于在标示符解析中变量的查找
+		//函数上下文的作用域链在函数调用是创建的 包括活动对象和这个函数的内部[[scope]]属性
+
+		/*activeExecutionContext = {
+			VO: {},
+			this: thisValue,
+			Scope:[]  //AO + [[scope]]
+		}*/
+
+		//函数的生命周期 创建 激活两个阶段
+
+		/*var x = 10;
+		function foo() {
+			var y = 20;
+			console.log(x+y);
+		}
+
+		foo();*/
+
+		//变量y是在foo的活动对象中，变量x不在foo的活动对象中(甚至可以理解为相对于foo它根本不存在)  但是函数能访问一个更高一层的变量对象 ，这种机制就是通过[[scope]]实现的
+		//[[scope]]是所用父变量对象的层级链，处于当前函数的上下文之上(先读取自身的属性)，在函数创建的存在其中
+		//[[scope]]在函数创建的时候被存储--静态的 函数可以不被调用，但是[[scope]]属性已经被写入，并且储存函数对象中
+		//
+
+		/*var x = 10;
+ 
+		function foo() {
+  			var y = 20;
+ 
+			function bar() {
+				var z = 30;
+				console.log(x +  y + z);
+			}
+ 
+  			bar();
+		}
+ 
+		foo(); // 60
+
+		globalContext.VO = {
+			x:10,
+			foo:<reference to function>
+		}
+		//全局上下文的变量对象
+
+		//foo()在创建的时候，"foo"的[[scope]]属性
+
+		foo.[[scope]] = {
+			globalContext.VO
+		}
+
+		//"foo"激活的时候(进入上下文)的时候的活动对象
+		fooContext.AO = {
+			y:20,
+			bar:<reference to function>
+		}
+
+		//foo的上下文作用链域为 foo.AO + foo.[[scope]]
+
+		fooContext.Scope = [
+			fooContext.AO,
+			globalContext.VO
+		]
+
+		//当内部函数bar创建的时候 其[[scope]]属性为
+		bar.[[scope]] = [
+			fooContext.AO,
+			globalContext.VO
+		]
+
+		//当进入bar的上下文的时候 
+		barContext.AO = {
+			z:30
+		}
+		//bar的上下文作用链域为
+		barContext.Scope = barContext.AO + bar.[[scopr]]
+
+		barContext.Scope = [
+			barContext.AO,
+			fooContext.AO,
+			globalContext.VO
+		]
+*/
+
+		/*var x = 10;
+
+		function foo() {
+			console.log(x);
+		}
+
+		(function () {
+			var x = 20;
+			foo(); // 10, but not 20
+		})();*/
+		//	当foo执行的时候回去foo的作用链域中查找 只包括 globalContext.AO
+
+
+
+		/*function foo() {
+  			console.log(x);
+		}
+ 
+		Object.prototype.x = 10;
+ 
+		foo(); // 10*/
+
+		//理解2维查找
+
+		/*foo.Scope = fooContext.AO + foo.[[scope]];
+
+		foo.Scope = [
+			fooContext.AO,
+			globalContext.VO
+		]
+*/
+
+		/*function foo() {
+
+			var x = 20;
+
+			function bar() {
+				console.log(x);
+			}
+
+			bar();
+		}
+
+		Object.prototype.x = 10;
+
+		foo(); // 20
+
+		//活动对象没有原型 如果活动对象有原型的话 就会从barContext.AO中读取了
+
+		bar.Scope = barContext.AO + bar.[[scope]];
+
+		bar.Scope = [
+			barContext.AO,
+			fooContext.AO,
+			globalContext.VO,
+		]*/
+
+		//全局上下文的作用链域仅包含全局对象 代码eval的上下文与当前的调用上下文有相同的作用域
+
+		/*var foo = {x: 10, y: 20};
+ 
+		with (foo) {
+		  console.log(x); // 10
+		  console.log(y); // 20
+		}
+
+		Scope = foo + AO/VO + [[scope]];*/
+
+		/*var x = 10, y = 10;
+
+		with ({x: 20}) {
+			var x = 30, y = 30;
+			console.log(x); // 30
+			console.log(y); // 30
+		}
+
+		console.log(x); // 10
+		console.log(y); // 30*/
+
+		//1) x=10 y=10 2)对象{x:20}被添加到作用链域的最前边 3)with内部遇到var的声明 并没有创建因为在进入上下文的时候，所有的变量已经被解析和添加x=10 y=10  3)解析{x:20}中的x 变成30  4)解析y的值将它变为30  5)with结束后 作用链恢复到之前的状态  6)但是y已经在with中做出了修改
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
