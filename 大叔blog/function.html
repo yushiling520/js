@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>function</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//ECMAScript中有三种函数类型  函数声明 函数表达式  函数构造器创建的函数
+
+		//函数声明  1)有一个特定的名称 2)在源码中的位置要么处于程序级要么处于其他函数的主体 3)在进入上下文阶段被创建 4)影响变量对象  声明方式  
+		/*function test() {
+
+		}*/
+
+		//函数声明的特点是它们仅仅影响变量对象， 在代码执行阶段已经可用 因为变量声明在进入上下文阶段已经存储在VO中(代码执行之前)
+
+		//只能在程序级或者一个函数的函数体内声明
+		//函数表达式 1)在源码中需出现表达式的位置 2)有可选的名称 3)不会影响变量对象 4)在代码执行阶段创建
+		
+		/*var test = function() {
+
+		}*/
+		//将一个匿名表达式赋值给变量test 通过test访问这个匿名函数表达式
+
+		/*// 圆括号（分组操作符）内只能是表达式
+		(function foo() {});
+ 
+		// 在数组初始化器内只能是表达式
+		[function bar() {}];
+ 
+		// 逗号也只能操作表达式
+		1, function baz() {};
+*/
+
+		
+		/*test();*/
+		/*(function(){console.log(1);});*/
+		/*test();*/
+		//在代码执行阶段被创建 不影响变量对象
+
+		/*var test = function() {
+			console.log(1);
+		};
+		test();*/  //函数表达式的第一个用法 是将函数表达式赋值给一个变量 通过变量来访问(变量影响变量对象)
+
+		//另外一个用法是创建封装的闭包从外部上下文中隐藏辅助型数据
+
+		
+		/*var test = {};
+
+		(function(){
+			var x = 10;
+
+			test.getX = function(){
+				console.log(x);
+			}
+		})();
+
+		test.getX(); //10
+		console.log(x); //未定义*/  //实现了对x的封装
+
+		/*function(){}();*/ //报错 没有名称的函数声明
+
+		/*function test(){}();*/  //这里我们得到了一个正确的函数声明 但是后面的分组运算符()并没有包含函数表达式
+
+		/*if(true) {
+			function test() {
+				console.log(1);
+			}
+		}
+
+		test();*/
+
+		//关于() 当函数不在表达式的位置的时候 分组操作符()必须将函数转换成FE(函数表达式) 如果解析器知道它处理的是表达式 ，就没有必要使用表达式了
+
+
+		/*if (true) {
+			function foo() {
+				alert(0);
+			}
+		} else {
+			function foo() {
+				alert(1);
+			}
+		}
+ 
+		foo(); // 1 or 0 ?实际在上不同环境下测试得出个结果不一样*/
+		//命名函数表达式 可以在递归调用中通过名称调用自身
+
+
+		//通过函数构造器创建的函数  主要特点在于这种函数的[[scope]]属性仅包含全局对象
+
+		/*var x = 10;
+
+		function test() {
+			var x = 10;
+			var y = 20;
+			var bar = new Function('console.log(x);console.log(y)');
+			bar();
+		}
+		test();*/  //10 undefined
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
