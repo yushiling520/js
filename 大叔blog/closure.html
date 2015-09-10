@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>closure</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//函数式参数 指值为函数的参数
+
+		/*function test(funArg) {
+			funArg();
+		}
+
+		test(function(){
+			console.log(1);
+		})*/
+
+		//test接收的是匿名函数  能接受函数式参数的称为高阶函数   以函数作为返回值的函数称为带函数值的函数
+
+		//自复制函数
+		/*function say(name) {
+			console.log(name);
+		}
+
+		function sayNames(names) {
+			names.forEach(say,names);
+		}
+
+		sayNames(['haha','hao','ha']);*/
+
+
+		/*function sayNames(name) {
+			say(name);
+			return sayNames;//返回函数自身
+		}
+
+		sayNames('hah')('ha')('haah');*/
+
+
+
+		//实现一个curry化函数
+
+		/*Function.prototype.method = function(name,func) {
+			this.prototype[name] = func;
+			return this;
+		}*/
+
+		/*function a() {
+
+		}
+
+		Function.method("a",function(){
+			console.log("a");
+		})
+		a.a();*/
+		
+		/*Function.method("curry",function(){
+			var slice = Array.prototype.slice,
+				args = slice.apply(arguments),//将curry之前的参数变成数组
+				that = this,//that能访问curry之前的作用域
+				resultbefore = 0,
+				length = args.length,
+				i = 0;
+
+			for(i = 0; i < length;i += 1) {
+				resultbefore += args[i];
+			}
+
+			return function(c) {
+				var result = resultbefore + c;
+				console.log(result);
+			}
+		});
+
+		function add() {
+
+		}
+
+		var add1 = add.curry(1,2,3);
+
+		add1(4);*/
+
+		/*function test(funArg) {
+			//var a = 10;  此处定义的局部变量在funArg激活的时候已经能访问
+			funArg(10);
+			funArg(20);
+		}
+
+		test(function(arg){
+			var local = 10;
+			console.log(arg + local);
+		});
+
+		test();*/
+
+		//闭包是一系列代码块 静态保存了父级的静态作用域 通过这些保存的作用域来搜寻函数中的静态变量
+		//闭包是代码块和创建该代码块的上下文的结合  在创建闭包的时候 上下文的数据就已经保存起来
+		//ECMAScript只支持静态作用域
+
+		/*var x = 10;
+		function foo() {
+			console.log(x);
+		}
+
+		(function(funArg){
+			var x = 20;
+			funArg();
+		})(foo);*/
+
+		//ECMAScript中所有函数都是闭包 他们都在创建的时候保存了父级的作用域 存在[[scope]]属性中
+		//小考点 同一个上下文中创建的闭包共享一个[[scope]]属性 也就是某个闭包对[[scope]]属性中的值修改的时候，会影响另一个函数
+
+		/*var x = 10;
+
+		function a() {
+			console.log(x++);
+		}
+
+		function b() {
+			console.log(++x);
+		}
+
+		a();
+		b();*/
+
+/*
+		var firstClosure;
+		var secondClosure;
+
+		function foo() {
+
+			var x = 1;
+
+			firstClosure = function () { return ++x; };
+			secondClosure = function () { return --x; };
+
+			x = 2; // 影响 AO["x"], 在2个闭包公有的[[Scope]]中  闭包保存父级的作用域 这里面也就是读取父级作用域的变量对象中x的值 自这个闭包实际运行的时候 x的值已经变成2
+
+			console.log(firstClosure()); // 3, 通过第一个闭包的[[Scope]]
+		}
+
+		foo();
+
+		console.log(firstClosure()); // 4
+		console.log(secondClosure()); // 3*/
+
+
+		//在ECMAScript中 闭包中返回语句会将控制权返回给调用上下文(调用者)
+		//通过函数构造器Function创建的函数 其[[scope]]属性只包含全局对象
+
+		//ECMAScript中闭包的定义 1）理论所有的函数的函数 因为他们都在创建的时候将上层上下文的数据保存了起来 2）实践 以下函数才算是闭包 即使创建它的上下文已经销毁，它仍然存在(内部函数从父函数返回) 或者在代码中引用了自由变量
+
+		/*var nums = [1,3,2];
+		var b = nums.sort(function(a,b){
+			if(a >b) {
+			 return 1;
+			} else {
+				return -1;
+			}
+		});
+
+		console.log(b); //sort是在原数组上进行修改
+		console.log(nums);
+*/
+		/*var nums = [1,2,3];
+		console.log(nums.map(function(a){
+			return a*2;
+		}));
+		console.log(nums);*/  //map返回一个新的数组
+
+		/*var nums = [1,4,7,8];
+		nums.forEach(function(element){
+			if(element % 2 == 0) {
+				console.log(element);
+			}
+		});
+*/
+		
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
