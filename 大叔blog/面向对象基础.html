@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>面向对象基础</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//ECMAScript是基于原型实现的面向对象的编程语言
+		//类代表一个实例(也就是对象的)抽象  实例的特点 属性(对象描述) 方法(对象活动)    对象储存了状态
+		//在基于类的继承中 属性是复制到子类中的  方法是查找的
+		//原型是一个对象 它是用来作为其他对象的原始copy 或者如果一些对象没有自己的必要特性 原型可以作为这些对象的一个委托当成辅助对象
+
+		//ECMAScript是一种面向对象的语言，支持基于原型的委托式继承
+
+
+
+		//冻结对象  静态对象
+		/*var foo = {x:10};
+
+		Object.freeze(foo);
+		console.log(Object.isFrozen(foo));
+
+		foo.x = 100; //不能修改
+		foo.y = 20; //不能扩展
+		delete foo.x //不能删除
+
+		console.log(foo.x); //10
+		console.log(foo.y); //undefined
+		console.log(foo.x);*/
+
+		/*var foo = {x:10};
+		Object.defineProperty(foo,"y",{
+			value:20,
+			writable:false, //只读
+			configurable:false //不可配置
+		});
+
+		foo.y = 200;
+		console.log(foo.y);
+		delete foo.y 
+		console.log(foo.y);
+
+		Object.preventExtensions(foo);
+		console.log(Object.isExtensible(foo));
+
+		foo.z = 30;
+
+		console.log(foo);*/
+
+
+		//内置对象 是被ECMAScript规范定义和实现的   所有ECMAScript实现的对象都是原生对象 内置对象是原生对象的一个子集  宿主对象是由宿主环境提供的
+		//规范也定义了一些原生的特殊包装类  布尔对象  字符串对象 数字对象 它们通过内置的构造器创建并以原生值作为其内部的属性  这些对象可以转换成原始值
+		//创建一个没有原型的对象
+		/*var HashTable = Object.create(null);
+		console.log(HashTable.toString);  //undefined*/
+
+		
+		/*var a = new Number(1);
+		console.log(typeof a); //object
+		var b = Number(2);  //隐式的valueOf调用
+		console.log(typeof b); //number
+		var c = a.valueOf();
+		console.log(typeof c); //number*/
+
+		//对象在进行操作的时候会隐式的调用valueof方法
+
+		/*var a = {
+			x:10,
+			y:20,
+			valueOf: function(){
+				return this.x + this.y;
+			}
+		}
+
+		var d = {
+			x:20,
+			y:20,
+			valueOf:function(){
+				return this.x + this.y;
+			}
+		}
+
+		console.log(a + d);*/
+
+		//toString()在某些操作上是自动调用的
+		
+
+		//新创建的对象的原型是从当前时刻函数的prototype属性获取的
+		/*function A() {}
+
+		A.prototype.x = 10;
+
+		var a = new A();
+		console.log(a.x);
+
+		A.prototype = {
+			constructor:A,
+			y :100
+		}
+
+		var b = new A();
+		console.log(b.x);
+		console.log(b.y);
+
+		console.log(a.x);
+*/
+		var a = 1;
+		console.log('a' in window);
+
+
+		</script>
+
+</body>
+</html>
