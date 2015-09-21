@@ -5,6 +5,7 @@
 	<title>this</title>
 </head>
 <body>
+	<input type="button" value="test" id="testBtn"/>
 	<script type="text/javascript">
 		//this与上下文中可执行的代码的类型有直接的关系，this值在进入上下文时确定，并且在上下文运行期间永不改变(不能改变this的值)
 		//在函数代码中this不是静态的绑定到一个函数  
@@ -106,7 +107,7 @@
 
 		//在函数调用中手动设置this的值  apply call  apply 第二个参数必须是数组 call可以是任何参数
 
-		var b = 10;
+		/*var b = 10;
 
 		function a(c) {
 			alert(this.b);
@@ -116,14 +117,58 @@
 		a(20); // this === global, this.b == 10, c == 20
 		 
 		a.call({b: 20}, 30); // this === {b: 20}, this.b == 20, c == 30
-		a.apply({b: 30}, [40]) // this === {b: 30}, this.b == 30, c == 40
+		a.apply({b: 30}, [40]) // this === {b: 30}, this.b == 30, c == 40*/
+
+
+		/*console.log(this);
+		function test() {
+			console.log(this);
+		}
+		test();*/  //作为函数直接调用的话是window
+
+
+		/*function test() {
+			function foo() {
+				console.log(this);
+			}
+			foo();
+		}
+
+		test();*/  //嵌套函数调用仍然是window
 
 
 
+		/*var btn = document.getElementById("testBtn");
+		btn.addEventListener("click",function(e){
+			console.log(this); //事件源头
+			var _document = this;
+			setTimeout(function(){
+				console.log(this); //window
+				console.log(_document);  
+			},200)
+		},false);*/  
 
 
+		/*function fn4(){
+			console.log(fn4.caller);  //非函数调用或者没被调用都是null
+			function fn(){
+				console.log(fn.caller);    //function fn4()
+			}
+			fn();
+		}
 
+		fn4();*/   //caller 指向调用它的函数 
 
+		/*function fn5(name, age){
+			console.log(arguments);
+			name = 'XXX';
+			console.log(arguments);
+			arguments[1] = 30;
+			console.log(arguments);
+		}
+
+		fn5('Byron', 20);  //关于参数的问题
+*/
 
 
 
