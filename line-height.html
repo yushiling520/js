@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>line-height</title>
+	<style type="text/css">
+		.mulit_line{line-height:150px; border:1px dashed #cccccc; padding-left:5px;}
+		.mulit_line span{display:-moz-inline-stack; display:inline-block; line-height:1.4em; vertical-align:middle;}
+		.mulit_line i{width:0; display:-moz-inline-stack; display:inline-block; vertical-align:middle; font-size:0;}
+		
+		.out{display:inline-block; background:#a0b3d6; margin-top:20px;}
+		.in1{display:block; height:20px;}
+		.in2{display:block; line-height:20px;}
+		.a {
+			width:200px;
+		}
+	</style>
+</head>
+	
+<body>
+	<p class="mulit_line">
+    <span style="font-size:12px;">这里是高度为150像素的标签内的多行文字，文字大小为12像素。<br />这里是第二行，用来测试多行的显示效果。多行文字垂直居中</span><i>&nbsp;</i>
+	</p>
+	<p class="a">
+		<span class="out">
+			<span class="in1">height:20px;</span>
+		</span></br>
+		<span class="out">
+			<span class="in2">line-height:20px;</span>
+		</span>
+	</p>
+	<script type="text/javascript">
+
+	</script>
+</body>
+</html>
